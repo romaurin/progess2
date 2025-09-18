@@ -5,34 +5,32 @@
   <title>Фото</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background: black;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
-      width: 100vw;
+      height: 100%;
+      width: 100%;
       overflow: hidden;
+      background: black;
     }
     #clock {
       position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 48px;
+      top: 10px;
+      right: 10px;
+      font-size: 6vw; /* адаптивный размер под экран */
       font-weight: bold;
       color: black; /* по умолчанию чёрные */
       font-family: Arial, sans-serif;
       text-shadow: none;
       z-index: 10;
-      cursor: pointer; /* чтобы было видно, что можно нажать */
+      cursor: pointer;
+      user-select: none;
     }
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* фото всегда на весь экран */
+      display: block;
     }
     #fileInput {
       display: none;
@@ -66,12 +64,12 @@
       }
     });
 
-    // Смена фото
+    // Смена фото по клику на экран
     const input = document.getElementById('fileInput');
     const img = document.getElementById('preview');
 
     document.body.addEventListener('click', (e) => {
-      if (e.target !== clock) { // чтобы клик по часам не открывал выбор файла
+      if (e.target !== clock) {
         input.click();
       }
     });
