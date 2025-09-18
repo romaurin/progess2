@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Фото</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+    #clock {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 48px;
+      font-weight: bold;
+      color: black; /* по умолчанию чёрные */
+      font-family: Arial, sans-serif;
+      text-shadow: none;
+      z-index: 10;
+      cursor: pointer; /* чтобы было видно, что можно нажать */
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #fileInput {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">00:00:00</div>
+  <img id="preview" src="photo.jpg" alt="Фото">
+  <input type="file" id="fileInput" accept="image/*">
+
+  <script>
+    const clock = document.getElementById("clock");
+
+    // Часы
+    function updateClock() {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString("ru-RU", { hour12: false });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Переключение цвета по клику
+    clock.addEventListener("click", () => {
+      if (clock.style.color === "black") {
+        clock.style.color = "white";
+        clock.style.textShadow = "2px 2px 6px rgba(0,0,0,0.6)";
+      } else {
+        clock.style.color = "black";
+        clock.style.textShadow = "2px 2px 6px rgba(255,255,255,0.6)";
+      }
+    });
+
+    // Смена фото
+    const input = document.getElementById('fileInput');
+    const img = document.getElementById('preview');
+
+    document.body.addEventListener('click', (e) => {
+      if (e.target !== clock) { // чтобы клик по часам не открывал выбор файла
+        input.click();
+      }
+    });
+
+    input.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        img.src = URL.createObjectURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
